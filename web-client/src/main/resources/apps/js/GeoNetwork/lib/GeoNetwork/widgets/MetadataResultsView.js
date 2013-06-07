@@ -57,7 +57,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
     //multiSelect : true,
     overClass: 'md-over',
     
-    itemSelector: 'li.md',
+    itemSelector: '.md',
     
     emptyText: '',
     
@@ -346,7 +346,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
         
         // TODO : add utility to add/remove templates
         this.templates = this.templates || {
-            SIMPLE: GeoNetwork.Templates.SIMPLE,
+        	GEONORGE: GeoNetwork.Templates.GEONORGE,
             THUMBNAIL: GeoNetwork.Templates.THUMBNAIL,
             FULL: GeoNetwork.Templates.FULL
         };

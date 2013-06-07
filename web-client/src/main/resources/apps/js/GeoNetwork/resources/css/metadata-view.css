@@ -20,6 +20,12 @@
   margin-bottom : 5px;
 }
 
+.md-view td h1 {
+color: #0076A1;
+font-size: small;
+margin-bottom: 5px;
+}
+
 .md-view div.relation {
   margin-left : 30px !important;
   max-height : 50px !important;
@@ -88,6 +94,10 @@ table.related * li {
   padding : 2px 2px 2px 2px;
 }
 
+.md-view .md-links ul li {
+  float: none;
+}
+
 /* View mode */
 .md-view ul li.md-simple {
   width : 98%;
@@ -112,12 +122,19 @@ table.related * li {
 }
 .md-view * table tr {
   vertical-align : top;
-} /*
-.md-view * table tr td.md-full-right {
-  width : 180px;
-  text-align : right;
+} 
+
+.md-view table.md-results th {
+  font-weight: bold;
 }
-*/
+.md-view table.md-results thead {
+  border-bottom: 1px solid black;	
+}
+
+tbody tr:nth-child(even) {background: #fff}
+tbody tr:nth-child(odd) {background: #eee}
+
+
 .md-full-right * img {
   max-width : 180px;
   max-height : 140px;
@@ -161,7 +178,6 @@ div.md-contact span {
 }
 
 div.md-contact {
-  text-align : right;
   clear : both;
 }
 
@@ -271,7 +287,7 @@ Display hyperlink as text next to element
 .mn-user-location {
   background-image : url(../images/default/user_location.png) !important;
 }
-.mn-view-simple {
+.mn-view-simple, .mn-view-geonorge {
   background-image : url(../images/default/mv-simple.png) !important;
   background-repeat : no-repeat;
 }

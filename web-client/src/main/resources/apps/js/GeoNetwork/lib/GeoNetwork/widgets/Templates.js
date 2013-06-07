@@ -288,3 +288,81 @@ GeoNetwork.Templates.Relation = {
 									 '<table><tr><td style="text-transform:capitalize;vertical-align:top;color:red">{subType}</td><td><a href="#" onclick="javascript:catalogue.metadataShow(\'{uuid}\');return false;" title="{abstract}">{title}</a></td></tr></table>',
                  '</li>']
 };
+
+GeoNetwork.Templates.GEONORGE = new Ext.XTemplate(
+		'<table class="md-results">',
+		'<thead><tr>',
+		'<th></th><th>Tittel</th><th>Organisasjon</th><th>Ressurstype</th><th>Lenker</th><th>Produkspesifikasjon</th>',
+		'</tr></thead><tbody>',
+		'<tpl for=".">',
+		'<tr class="md md-full md-geonorge" style="{featurecolorCSS}" title="{[values.abstract.substring(0, 350)]}">',
+  		  '<td class="left" >', GeoNetwork.Templates.LOGO, '</td>',
+	      '<td id="{uuid}">', GeoNetwork.Templates.TITLE, '</td>',
+	      '<td>',
+		      '<tpl for="contact[0]">',
+	          	'<h1>{name}</h1>',             
+	          	'</tpl>',
+	      '</td>',
+	      '<td>',
+	          '<tpl if="type==\'dataset\'">',
+	          	'<p>Datasett</p>',
+	          '</tpl>',
+	          '<tpl if="type==\'service\'">',
+	          	'<p>Tjeneste</p>',
+	          '</tpl>',
+	          '<tpl if="type==\'series\'">',
+	          	'<p>Serie</p>',
+	          '</tpl>',
+	          '<tpl if="type!=\'dataset\' && type!=\'service\' && type!=\'series\'">',
+	          	'<p>{type}</p>',
+	          '</tpl>',
+	      '</td>',	      
+          '<td>',
+            '<div class="md-links">',
+            	'<ul>',
+                '<tpl for="links">',
+                    '<tpl if="parent.dynamic==\'true\' && (values.type == \'application/vnd.ogc.wms_xml\' || values.type == \'OGC:WMS\')">',
+                        '<li><a href="#" class="md-mn addLayer" title="' + OpenLayers.i18n('addToMap') + ' {title}" alt="Add layer to map" onclick="app.switchMode(\'1\', true);app.getIMap().addWMSLayer([[\'{[escape(values.title)]}\', \'{href}\', \'{name}\', \'{id}\']]);">Vis i kart&nbsp;</a></li>',
+                    '</tpl>',
+                    '<tpl if="parent.dynamic==\'true\' && values.type == \'application/vnd.google-earth.kml+xml\'">',
+                        '<li><a href="{href}" class="md-mn md-mn-kml" title="' + OpenLayers.i18n('viewKml') + ' {title}" alt="Open kml">Åpne (KML)&nbsp;</a></li>',
+                    '</tpl>',
+                    '<tpl if="parent.download==\'true\' && (values.type == \'application/zip\' || values.type == \'application/x-compressed\')">',
+                        '<li><a href="{href}" class="md-mn md-mn-zip" title="' + OpenLayers.i18n('downloadLink') + ' {title}" alt="Download">Last ned&nbsp;</a></li>',
+                    '</tpl>',
+                    '<tpl if="parent.download==\'true\' && values.protocol.indexOf(\'WWW:DOWNLOAD\')!=-1">',
+                        '<li><a href="{href}" class="md-mn md-mn-zip" title="' + OpenLayers.i18n('downloadLink') + ' {title}" alt="Download">Last ned&nbsp;</a></li>',
+                    '</tpl>',
+                    '<tpl if="values.type == \'text/html\'">',
+                        '<li><a href="{href}" class="md-mn md-mn-www" title="' + OpenLayers.i18n('webLink') + ' {title}" alt="Web link" target="_blank">Gå til nettside&nbsp;</a></li>',
+                    '</tpl>',
+                    // FIXME : no else ops, how to display other links ?
+                //'|<a href="#" onclick="app.getIMap().addWMSLayer([[\'{title}\', \'{href}\', \'{name}\', \'{id}\']]);">{type}</a>',
+                '</tpl>',
+                '<tpl if="this.hasDownloadLinks(values.links)">',//type == \'application/vnd.ogc.wms_xml\'">',
+                	'<li><a href="#" onclick="catalogue.metadataPrepareDownload({id});" class="md-mn downloadAllIcon" title="' + OpenLayers.i18n('prepareDownload') + '" alt="download">&nbsp;</a></li>',
+                '</tpl>',
+                '</ul>',
+            '</div>',
+	      '</td>',
+	      '<td></td>',
+		'</tr>',
+		'<!--<tr>',
+			'<td colspan="4">',
+				'<p class="abstract"><b>Beskrivelse:</b> {[values.abstract.substring(0, 350)]} ...</p>',
+			'</td>',
+		'</tr>-->',
+		'</tpl></tbody>',
+		'</table>',
+    {
+        hasDownloadLinks: function(values) {
+            var i;
+            for (i = 0; i < values.length; i ++) {
+                if (values[i].type === 'application/x-compressed') {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+);

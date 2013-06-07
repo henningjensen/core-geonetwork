@@ -528,7 +528,7 @@ GeoNetwork.app = function () {
             catalogue : catalogue,
             displaySerieMembers : true,
             autoScroll : true,
-            tpl : GeoNetwork.Templates.FULL
+            tpl : GeoNetwork.Templates.GEONORGE
         });
 
         catalogue.resultsView = metadataResultsView;

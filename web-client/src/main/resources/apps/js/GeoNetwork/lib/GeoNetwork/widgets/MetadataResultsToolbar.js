@@ -346,7 +346,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
                     iconCls: 'mn-view-' + t.toLowerCase(),
                     toggleHandler: this.clickTemplateMenu,
                     scope: this.metadataResultsView,
-                    pressed: (t === 'FULL' ? true : false)
+                    pressed: (t === 'GEONORGE' ? true : false)
                 });
                 data.push(tg);
             }
