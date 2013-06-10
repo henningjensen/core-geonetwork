@@ -279,7 +279,47 @@ GeoNetwork.data.MetadataResultsFastStore = function(){
             return 0;
         }
     }
-    
+    function getApplicationProfileValue(applicationProfiles, name) {
+        var result = '';
+        if (applicationProfiles !== undefined) {
+            for (i = 0; i < applicationProfiles.length; i++) {
+                var tokens = applicationProfiles[i].value.split(separator);
+                if (tokens[0] == name) {
+                    result = tokens[1];
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+    function getProduktspesifikasjon(v, record) {
+        if (record.applicationProfile) {
+            return getApplicationProfileValue(record.applicationProfile, 'produktspesifikasjon');
+        } else {
+            return '';
+        }
+    }
+    function getProduktark(v, record) {
+        if (record.applicationProfile) {
+            return getApplicationProfileValue(record.applicationProfile, 'produktark');
+        } else {
+            return '';
+        }
+    }
+    function getProduktside(v, record) {
+        if (record.applicationProfile) {
+            return getApplicationProfileValue(record.applicationProfile, 'produktside');
+        } else {
+            return '';
+        }
+    }
+    function getTegnforklaring(v, record) {
+        if (record.applicationProfile) {
+            return getApplicationProfileValue(record.applicationProfile, 'tegnforklaring');
+        } else {
+            return '';
+        }
+    }
     
     return new Ext.data.JsonStore({
         totalProperty: 'summary.count',
@@ -383,6 +423,18 @@ GeoNetwork.data.MetadataResultsFastStore = function(){
         }, {
             name: 'valid_details',
             convert: getValidationDetails
+        }, {
+            name: 'produktspesifikasjon',
+            convert: getProduktspesifikasjon
+        }, {
+            name: 'produktark',
+            convert: getProduktark
+        }, {
+            name: 'produktside',
+            convert: getProduktside
+        }, {
+            name: 'tegnforklaring',
+            convert: getTegnforklaring
         }
         ]
     });

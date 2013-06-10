@@ -553,6 +553,14 @@
 				
 		<!--<xsl:apply-templates select="." mode="codeList"/>-->
 		
+		<!-- GeoNorge - Indeksering av produktspesifikasjon, produktark, tegnforklaring, produktside -->
+
+		<xsl:for-each select="gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation">
+            <xsl:variable name="applicationProfile"  select="gmd:extensionOnLineResource/gmd:CI_OnlineResource/gmd:applicationProfile/gco:CharacterString"/>
+            <xsl:variable name="url"  select="gmd:extensionOnLineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+            <Field name="applicationProfile" string="{concat($applicationProfile, '|', $url)}" store="true" index="true"/>
+		</xsl:for-each>
+
 	</xsl:template>
 
 	<!-- ========================================================================================= -->

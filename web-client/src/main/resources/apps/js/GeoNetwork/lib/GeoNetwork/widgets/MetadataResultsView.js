@@ -524,6 +524,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
         this.initRatingWidget();
         this.dislayLinks(records);
         //this.initMenu();
+
     },
     /** private: method[dislayLinks]
      *  Search for children for all records which are series.
