@@ -38,10 +38,37 @@
         />
       </xsl:with-param>
       <xsl:with-param name="tabs" select="$tabs"/>
-      
+      <!-- GeoNorge download links -->
+      <xsl:with-param name="downloadLinks">
+        <xsl:if test="gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation">
+            <fieldset>
+            <legend>Nedlasting av produktinformasjon:</legend>
+                <ul>
+                    <xsl:apply-templates select="gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation" />
+                </ul>
+            </fieldset>
+        </xsl:if>
+      </xsl:with-param>
     </xsl:call-template>
     
-    
+  </xsl:template>
+
+  <xsl:template match="gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation">
+    <xsl:variable name="applicationProfile"  select="gmd:extensionOnLineResource/gmd:CI_OnlineResource/gmd:applicationProfile/gco:CharacterString"/>
+    <xsl:variable name="url"  select="gmd:extensionOnLineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+    <li><a>
+        <xsl:attribute name="href">
+            <xsl:value-of select="$url"/>
+        </xsl:attribute>
+        <xsl:attribute name="target">_blank</xsl:attribute>
+        <xsl:choose>
+            <xsl:when test="$applicationProfile eq 'produktspesifikasjon'">Produktspesifikasjon</xsl:when>
+            <xsl:when test="$applicationProfile eq 'produktside'">Produktside</xsl:when>
+            <xsl:when test="$applicationProfile eq 'produktark'">Produktark</xsl:when>
+            <xsl:when test="$applicationProfile eq 'tegnforklaring'">Tegnforklaring</xsl:when>
+            <xsl:otherwise><xsl:value-of select="$applicationProfile"/></xsl:otherwise>
+        </xsl:choose>
+    </a></li>
   </xsl:template>
 
   <!-- View templates are available only in view mode and does not provide editing

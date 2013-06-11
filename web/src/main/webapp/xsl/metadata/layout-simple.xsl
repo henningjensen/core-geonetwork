@@ -14,6 +14,7 @@
     <xsl:param name="abstract"/>
     <xsl:param name="relatedResources"/>
     <xsl:param name="tabs"/>
+    <xsl:param name="downloadLinks" />
 
     <table class="gn">
       <tr>
@@ -33,6 +34,7 @@
       </tr>
       <tr>
         <td colspan="2">
+          <xsl:copy-of select="$downloadLinks"/>
           <xsl:copy-of select="$relatedResources"/>
           <xsl:copy-of select="$tabs"/>
         </td>
