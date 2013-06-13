@@ -68,6 +68,7 @@
 		<!-- stylesheet -->
 		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/geonetwork.css"/>
 		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/modalbox.css"/>
+		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/geonorge.css" />
 		<xsl:apply-templates mode="css" select="/"/>
 
 		<!-- JS -->

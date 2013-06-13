@@ -4,7 +4,7 @@
 	<xsl:variable name="apos">&#x27;</xsl:variable>
 
 	<xsl:variable name="maxAbstract" select="200"/>
-	<xsl:variable name="maxKeywords" select="400"/>
+	<xsl:variable name="maxKeywords" select="100"/>
 	
 	<!-- default: just copy -->
 	<xsl:template match="@*|node()" mode="copy">

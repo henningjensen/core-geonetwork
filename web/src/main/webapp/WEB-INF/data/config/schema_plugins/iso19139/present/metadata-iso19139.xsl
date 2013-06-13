@@ -3321,6 +3321,10 @@
 			<xsl:value-of select="gmd:dateStamp/*"/>
 		</metadatacreationdate>
 
+        <xsl:if test="gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation">
+            <xsl:apply-templates select="gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation" />
+        </xsl:if>
+
 		<geonet:info>
 			<xsl:copy-of select="geonet:info/*[name(.)!='edit']"/>
 			<xsl:choose>
@@ -3348,6 +3352,27 @@
 			</category>
 		</geonet:info>
 	</xsl:template>
+
+<!--  GeoNorge - extra info -->
+ <xsl:template match="gmd:metadataExtensionInfo/gmd:MD_MetadataExtensionInformation">
+    <xsl:variable name="applicationProfile"  select="gmd:extensionOnLineResource/gmd:CI_OnlineResource/gmd:applicationProfile/gco:CharacterString"/>
+    <xsl:variable name="url"  select="gmd:extensionOnLineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+    <productInformation>
+        <url>
+            <xsl:value-of select="$url"/>
+        </url>
+        <name>
+	        <xsl:choose>
+	            <xsl:when test="$applicationProfile eq 'produktspesifikasjon'">Produktspesifikasjon</xsl:when>
+	            <xsl:when test="$applicationProfile eq 'produktside'">Produktside</xsl:when>
+	            <xsl:when test="$applicationProfile eq 'produktark'">Produktark</xsl:when>
+	            <xsl:when test="$applicationProfile eq 'tegnforklaring'">Tegnforklaring</xsl:when>
+	            <xsl:otherwise><xsl:value-of select="$applicationProfile"/></xsl:otherwise>
+	        </xsl:choose>
+        </name>
+    </productInformation>
+  </xsl:template>
+
 
 	<xsl:template mode="briefster" match="*">
 		<xsl:param name="id"/>

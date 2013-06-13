@@ -431,7 +431,10 @@
 												<xsl:value-of select="$metadata/title"/>
 											</a>
 										</xsl:otherwise>
-									</xsl:choose>
+									</xsl:choose>									
+								</div>
+								<div class="hitResponsibleParty">
+								    <p><xsl:value-of select="$metadata/responsibleParty/organisationName" /></p>
 								</div>
 
 							</xsl:otherwise>
@@ -482,9 +485,26 @@
 							</div>
 						</div>
 					</xsl:if>
+                    
+			         <xsl:if test="$metadata/productInformation">
+			            <div class="productInformation">
+			                <ul>
+								<xsl:for-each select="$metadata/productInformation">
+								    <li><a>
+								        <xsl:attribute name="href">
+								            <xsl:value-of select="url"/>
+								        </xsl:attribute>
+								        <xsl:attribute name="target">_blank</xsl:attribute>
+								        <xsl:value-of select="name"/>
+								    </a></li>			                     
+								</xsl:for-each>
+			                </ul>
+			            </div>
+			         </xsl:if>
+
 
 				  <xsl:if test="/root/gui/searchDefaults/output = 'full'">
-					<!-- schema -->
+					<!-- schema 
 					<xsl:if test="$metadata/geonet:info/schema">
 						<div class="hittext_middle">
 							<div class="caption"><xsl:value-of select="/root/gui/strings/schema"/></div>
@@ -493,7 +513,8 @@
 							</div>
 						</div>
 					</xsl:if>
-				  
+				    -->
+				    <!-- 
 					<xsl:if test="normalize-space($metadata/geoBox) or $metadata/temporalExtent">
 						<div class="hittext_middle">
 							<div class="caption"><xsl:value-of select="/root/gui/strings/extent"/></div>
@@ -514,6 +535,7 @@
 							</div>
 						</div>
 					</xsl:if>
+					-->
 				  </xsl:if>
 				  
 				</div>
@@ -671,6 +693,7 @@
 			</div>
 	</xsl:template>
 	
+ 	
 	<xsl:template name="download-button">
 		<xsl:param name="metadata"/>
 		<xsl:param name="remote"/>
