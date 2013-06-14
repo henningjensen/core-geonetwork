@@ -881,13 +881,16 @@ GeoNetwork.app = function () {
                                 title : OpenLayers.i18n('List'),
                                 autoScroll : false,
                                 layout : 'border',
-                                items : [ {// sidebar searchform
+                                items : [                                         
+                                /*// GEONORGE - HIDE MAP IN RESULT VIEW
+                                {// sidebar searchform
                                     region : 'west',
                                     id : 'west',
                                     border : true,
                                     width : 250,
                                     items : [ resultsMap ]
-                                }, {
+                                },*/
+                                 {
                                     layout : 'fit',
                                     region : 'center',
                                     border : false,

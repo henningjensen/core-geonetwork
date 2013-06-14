@@ -94,10 +94,6 @@ table.related * li {
   padding : 2px 2px 2px 2px;
 }
 
-.md-view .md-links ul li {
-  float: none;
-}
-
 /* View mode */
 .md-view ul li.md-simple {
   width : 98%;
@@ -123,6 +119,13 @@ table.related * li {
 .md-view * table tr {
   vertical-align : top;
 } 
+
+
+.md-view table.md-results td.w75 { width: 75px; }
+.md-view table.md-results td.w150 { width: 150px; }
+.md-view table.md-results td.w200 { width: 200px; }
+.md-view table.md-results td.w250 { width: 250px; }
+
 
 .md-view table.md-results th {
   font-weight: bold;
