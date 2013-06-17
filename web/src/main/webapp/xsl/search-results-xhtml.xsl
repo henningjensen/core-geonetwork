@@ -591,6 +591,13 @@
 						</xsl:if>
 					</xsl:if>
 		
+                    <xsl:if test="$metadata/hierarchyLevel='software' and $metadata/geonet:info/download='true'">
+                        <xsl:variable name="url" select="$metadata/link/node()" />
+                        <a href="{$url}" class="content" target="_blank">
+                            Gå til nettside
+                        </a>
+                    </xsl:if>
+		            
 					<!-- download data button -->
 					<xsl:choose>
 						<!-- add download button if have download privilege and downloads are available -->

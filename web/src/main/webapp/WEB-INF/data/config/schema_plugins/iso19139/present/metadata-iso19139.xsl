@@ -3202,6 +3202,12 @@
 			</xsl:call-template>
 		</xsl:variable>
 
+        <hierarchyLevel>
+            <xsl:if test="gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue">
+                <xsl:value-of select="gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue"/>
+            </xsl:if>
+        </hierarchyLevel>
+
 		<xsl:apply-templates mode="briefster" select="gmd:identificationInfo/gmd:MD_DataIdentification|gmd:identificationInfo/*[@gco:isoType='gmd:MD_DataIdentification']|gmd:identificationInfo/srv:SV_ServiceIdentification">
 			<xsl:with-param name="id" select="$id"/>
 			<xsl:with-param name="langId" select="$langId"/>
