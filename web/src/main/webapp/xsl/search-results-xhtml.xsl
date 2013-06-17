@@ -593,6 +593,7 @@
 		
                     <xsl:if test="$metadata/hierarchyLevel='software' and $metadata/geonet:info/download='true'">
                         <xsl:variable name="url" select="$metadata/link/node()" />
+                        &#160;
                         <a href="{$url}" class="content" target="_blank">
                             Gå til nettside
                         </a>
@@ -705,6 +706,7 @@
         <xsl:variable name="dataDownloads" select="count($metadata/link[@type='download' and not(ends-with(@protocol,'downloadother'))]|$metadata/link[@type='dataurl'])"/>
 		<xsl:if test="$dataDownloads>0">
 		  <xsl:variable name="url" select="$metadata/link/node()" />
+		  &#160;
 		  <a href="{$url}" class="content" target="_blank">
 		      <xsl:value-of select="/root/gui/strings/dataDownload"/>
 		  </a>
