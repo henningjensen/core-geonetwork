@@ -595,7 +595,7 @@
                         <xsl:variable name="url" select="$metadata/link/node()" />
                         &#160;
                         <a href="{$url}" class="content" target="_blank">
-                            Gå til nettside
+                            Nettside
                         </a>
                     </xsl:if>
 		            
