@@ -595,16 +595,16 @@
 					<xsl:choose>
 						<!-- add download button if have download privilege and downloads are available -->
 						<xsl:when test="$metadata/geonet:info/download='true' and count($metadata/link[@type='download'])>0">
-							<xsl:call-template name="download-button">
-								<xsl:with-param name="metadata" select="$metadata"/>
-								<xsl:with-param name="remote" select="$remote"/>
+							<xsl:call-template name="download-button-geonorge">
+								<xsl:with-param name="metadata" select="$metadata"/>								
+								<!-- <xsl:with-param name="remote" select="$remote"/> -->
 							</xsl:call-template>
 						</xsl:when>
 						<!-- or when the metadata has associated data url's -->
 						<xsl:when test="count($metadata/link[@type='dataurl'])>0">
-							<xsl:call-template name="download-button">
+							<xsl:call-template name="download-button-geonorge">
 								<xsl:with-param name="metadata" select="$metadata"/>
-								<xsl:with-param name="remote" select="$remote"/>
+								<!-- <xsl:with-param name="remote" select="$remote"/> -->
 							</xsl:call-template>
 							<!-- notify whether additional downloads would be available if logged in -->
 							<xsl:if test="$metadata/geonet:info/guestdownload='true' and 
@@ -693,6 +693,16 @@
 			</div>
 	</xsl:template>
 	
+    <xsl:template name="download-button-geonorge">
+        <xsl:param name="metadata"/>
+        <xsl:variable name="dataDownloads" select="count($metadata/link[@type='download' and not(ends-with(@protocol,'downloadother'))]|$metadata/link[@type='dataurl'])"/>
+		<xsl:if test="$dataDownloads>0">
+		  <xsl:variable name="url" select="$metadata/link/node()" />
+		  <a href="{$url}" class="content" target="_blank">
+		      <xsl:value-of select="/root/gui/strings/dataDownload"/>
+		  </a>
+		</xsl:if>
+	</xsl:template>
  	
 	<xsl:template name="download-button">
 		<xsl:param name="metadata"/>
