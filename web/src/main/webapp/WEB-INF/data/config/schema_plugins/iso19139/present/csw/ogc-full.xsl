@@ -15,6 +15,7 @@
 	<xsl:param name="lang"/>
 	
 	<xsl:include href="../metadata-iso19139-utils.xsl"/>
+	<xsl:include href="ogc-utils.xsl"/>
 	
 	<!-- ============================================================================= -->
 
@@ -53,6 +54,11 @@
 						</xsl:apply-templates>
 					</dc:title>
 				</xsl:for-each>
+				
+				<xsl:call-template name="getOrganisations">
+	                <xsl:with-param name="langGui" select="$lang"/>
+	                <xsl:with-param name="identification" select="../../."/>
+	            </xsl:call-template>
 				
 				<!-- Type - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				

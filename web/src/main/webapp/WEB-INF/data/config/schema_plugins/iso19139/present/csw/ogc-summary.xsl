@@ -14,6 +14,7 @@
 	<xsl:param name="lang"/>
 	
 	<xsl:include href="../metadata-iso19139-utils.xsl"/>
+	<xsl:include href="ogc-utils.xsl"/>
 	
 	<!-- ============================================================================= -->
 	
@@ -47,6 +48,12 @@
 						</xsl:apply-templates>
 					</dc:title>
 				</xsl:for-each>
+				
+				<xsl:call-template name="getOrganisations">
+                    <xsl:with-param name="langGui" select="$lang"/>
+                    <xsl:with-param name="identification" select="."/>
+                </xsl:call-template>
+				
 				
 				<!-- Type -->
 				<xsl:for-each select="../../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue">
@@ -103,6 +110,10 @@
 				<dc:source><xsl:value-of select="."/></dc:source>
 				</xsl:for-each>-->
 			
+			<xsl:call-template name="getUrls">
+                <xsl:with-param name="md" select="."/>
+                <xsl:with-param name="langId" select="$langId"/>
+            </xsl:call-template>
 			
 			<!-- GeoNetwork elements added when resultType is equal to results_with_summary -->
 			<xsl:if test="$displayInfo = 'true'">

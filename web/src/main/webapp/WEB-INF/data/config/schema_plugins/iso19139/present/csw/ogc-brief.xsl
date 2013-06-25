@@ -3,6 +3,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 										xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"
 										xmlns:dc ="http://purl.org/dc/elements/1.1/"
+										xmlns:dct="http://purl.org/dc/terms/"
 										xmlns:gco="http://www.isotc211.org/2005/gco"
 										xmlns:gmd="http://www.isotc211.org/2005/gmd"
 										xmlns:srv="http://www.isotc211.org/2005/srv"
@@ -14,6 +15,8 @@
 	<xsl:param name="lang"/>
 	
 	<xsl:include href="../metadata-iso19139-utils.xsl"/>
+	<xsl:include href="ogc-utils.xsl"/>
+	
 	
 	<!-- ============================================================================= -->
 
@@ -49,6 +52,11 @@
 				</xsl:for-each>
 			</xsl:for-each>
 
+            <xsl:call-template name="getOrganisations">
+                <xsl:with-param name="langGui" select="$lang"/>
+                <xsl:with-param name="identification" select="$identification"/>
+            </xsl:call-template>
+
 			<xsl:for-each select="gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue">
 				<dc:type><xsl:value-of select="."/></dc:type>
 			</xsl:for-each>
@@ -72,6 +80,69 @@
 					</ows:UpperCorner>
 				</ows:BoundingBox>
 			</xsl:for-each>
+			
+			<!-- URL's -->
+			
+			<xsl:for-each select="
+                gmd:identificationInfo/srv:SV_ServiceIdentification[srv:serviceType/gco:LocalName='OGC:WMS']|
+                gmd:identificationInfo/*[@gco:isoType='srv:SV_ServiceIdentification' and srv:serviceType/gco:LocalName='OGC:WMS']">
+                
+                <xsl:variable name="connectPoint" select="srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+                <xsl:variable name="serviceUrl">
+                    <xsl:choose>
+                        <xsl:when test="$connectPoint=''">
+                            <xsl:value-of select="../gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$connectPoint"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                
+                <dc:URI protocol="OGC:WMS-1.1.1-http-get-capabilities"><xsl:value-of select="$serviceUrl"/></dc:URI>
+                <xsl:for-each select="srv:coupledResource/srv:SV_CoupledResource">
+                    <xsl:if test="gco:ScopedName!=''">
+                        <dc:URI protocol="OGC:WMS" name="{gco:ScopedName}"><xsl:value-of select="$serviceUrl"/></dc:URI>
+                    </xsl:if>
+                </xsl:for-each>
+                 
+            </xsl:for-each>
+            
+            
+            <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
+                <xsl:for-each select="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
+                    <xsl:if test="gmd:linkage">
+                        <dc:URI>
+                            <xsl:if test="gmd:protocol">
+                                <xsl:attribute name="protocol"><xsl:value-of select="gmd:protocol/gco:CharacterString"/></xsl:attribute>
+                            </xsl:if>
+                            
+                            <xsl:if test="gmd:name">
+                                <xsl:attribute name="name">
+                                    <xsl:for-each select="gmd:name">
+                                        <xsl:apply-templates mode="localised" select=".">
+                                            <xsl:with-param name="langId" select="$langId"/>
+                                        </xsl:apply-templates>
+                                    </xsl:for-each>
+                                </xsl:attribute>
+                            </xsl:if>
+                            
+                            <xsl:if test="gmd:description">
+                                <xsl:attribute name="description">
+                                    <xsl:for-each select="gmd:description">
+                                        <xsl:apply-templates mode="localised" select=".">
+                                            <xsl:with-param name="langId" select="$langId"/>
+                                        </xsl:apply-templates>
+                                    </xsl:for-each>
+                                </xsl:attribute>
+                            </xsl:if>
+                            
+                            <xsl:value-of select="gmd:linkage/gmd:URL"/>
+                        </dc:URI>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:for-each>
+			
 			
 			<!-- GeoNetwork elements added when resultType is equal to results_with_summary -->
 			<xsl:if test="$displayInfo = 'true'">
